@@ -80,10 +80,10 @@ Route::get('/admin/view-files/{id}', [admin::class, 'viewFiles'])->name('admin.v
 
 Route::post('/accept-terms', [AuthController::class, 'acceptTerms'])->name('accept.terms');
 
-
-
-
-
+// Public Legal Pages
+Route::get('/privacy-policy', function () { return view('legal.privacy'); })->name('policy.privacy');
+Route::get('/terms-of-service', function () { return view('legal.terms'); })->name('policy.terms');
+Route::get('/accessibility', function () { return view('legal.accessibility'); })->name('policy.accessibility');
 
 // bruh the auth is actually in the:
 // protected $routeMiddleware = [

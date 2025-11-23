@@ -91,5 +91,6 @@
             }
         });
     </script>
+    <x-flash />
 </body>
 </html>

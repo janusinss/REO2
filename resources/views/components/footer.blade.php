@@ -14,13 +14,10 @@
                     Safeguarding the rights and welfare of human participants in research through ethical review and compliance.
                 </p>
                 <div class="flex gap-4">
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary transition-colors text-white/70 hover:text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100066732383288" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[#1877F2] transition-colors text-white/70 hover:text-white">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary transition-colors text-white/70 hover:text-white">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary transition-colors text-white/70 hover:text-white">
+                    <a href="mailto:reo@wmsu.edu.ph" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand-primary transition-colors text-white/70 hover:text-white">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
@@ -57,9 +54,9 @@
             <div>
                 <h4 class="font-bold text-lg mb-6">Legal</h4>
                 <ul class="space-y-3 text-sm text-slate-400">
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Data Privacy Act</a></li>
+                    <li><a href="{{ route('policy.privacy') }}" class="hover:text-brand-primary transition-colors">Privacy Policy</a></li>
+                    <li><a href="{{ route('policy.terms') }}" class="hover:text-brand-primary transition-colors">Terms of Service</a></li>
+                    <li><a href="{{ route('policy.accessibility') }}" class="hover:text-brand-primary transition-colors">Accessibility</a></li>
                 </ul>
                 <div class="mt-6 pt-6 border-t border-white/10">
                     <p class="text-xs text-slate-500">

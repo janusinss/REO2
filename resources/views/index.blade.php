@@ -1,52 +1,64 @@
 <x-layout>
-    <div class="relative w-full h-screen overflow-hidden">
-        <div class="slider-container h-full w-full">
-            @foreach(['reocpic.jpg', 'reoc2.jpg', 'reoc3.jpg'] as $index => $img)
-            <div class="slide {{ $index == 0 ? 'active' : '' }} absolute inset-0 w-full h-full opacity-0 transition-opacity duration-1000 ease-in-out">
-                <div class="absolute inset-0 bg-cover bg-center transform scale-105 transition-transform duration-[10000ms] hover:scale-110" 
-                     style="background-image: url('./images/{{ $img }}');"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent z-10"></div>
-            </div>
-            @endforeach
-        </div>
 
-        <div class="absolute inset-0 z-20 flex flex-col justify-center px-6 md:px-20 max-w-7xl mx-auto">
-            <div class="max-w-3xl animate-[fadeInUp_1s_ease-out]">
-                <span class="inline-block py-1 px-3 rounded-full bg-brand-primary/20 border border-brand-primary/50 text-red-200 text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-sm">
-                    Est. 2025 • Western Mindanao State University
-                </span>
-                <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-[1.1] mb-6 drop-shadow-2xl">
-                    Where Research <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-200">Meets Innovation.</span>
-                </h1>
-                <p class="text-lg md:text-xl text-gray-200 mb-10 leading-relaxed max-w-2xl border-l-4 border-brand-primary pl-6">
-                    REO is the digital hub for students and faculty to innovate, collaborate, and maintain the highest ethical standards in academic research.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="{{ route('register') }}" class="bg-brand-primary hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-all transform hover:-translate-y-1 shadow-lg shadow-red-900/50 flex items-center gap-2">
-                        Get Started <i class="fas fa-arrow-right text-sm"></i>
-                    </a>
-                    <a href="#mission" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-4 rounded-lg font-bold text-lg transition-all">
-                        Learn More
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="absolute bottom-10 right-10 z-30 flex gap-2">
-            <button id="prev" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-brand-dark transition-all">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <button id="next" class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-brand-dark transition-all">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
+  <div class="slider-container relative w-full h-screen overflow-hidden">
+    
+    <div
+      class="slide active absolute inset-0 w-full h-screen opacity-0 transition-opacity duration-1000 bg-cover bg-center"
+      style="background-image: url('./images/reocpic.jpg');">
+      <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
+      
+      <div
+        class="slide-content absolute top-1/2 -translate-y-1/2 left-[5%] md:left-[8%] z-20 max-w-[600px] text-left text-white p-[20px]">
+        <h2 class="mb-[15px] text-[2.5rem] md:text-[3rem] font-bold leading-tight">Welcome to REO: Where Research Meets Collaboration</h2>
+        <p class="text-[1.1rem] leading-[1.6] md:text-[1.2rem] mb-6">At REO, we’re creating a space where students, faculty,
+          and researchers come together to innovate, share knowledge, and grow. Whether you're looking to collaborate on
+          research projects, share valuable resources, or connect with peers REO is your go-to hub for academic
+          success.</p>
+      </div>
     </div>
 
-    <section id="mission" class="relative py-24 bg-surface-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                
+    <div class="slide absolute inset-0 w-full h-screen opacity-0 transition-opacity duration-1000 bg-cover bg-center"
+      style="background-image: url('./images/reoc2.jpg');">
+      <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
+      
+      <div
+        class="slide-content absolute top-1/2 -translate-y-1/2 left-[5%] md:left-[8%] z-20 max-w-[600px] text-left text-white p-[20px]">
+        <h2 class="mb-[15px] text-[2.5rem] md:text-[3rem] font-bold leading-tight">Collaborate, Share, Achieve</h2>
+        <p class="text-[1.1rem] leading-[1.6] md:text-[1.2rem] mb-6">
+          The power of collaboration lies in the exchange of ideas. REO makes it easy for students to pass materials,
+          participate in discussions, and contribute to ongoing research projects. From sharing research papers to
+          organizing study sessions, everything you need to stay connected and productive is just a click away.</p>
+      </div>
+    </div>
+
+    <div class="slide absolute inset-0 w-full h-screen opacity-0 transition-opacity duration-1000 bg-cover bg-center"
+      style="background-image: url('./images/reoc3.jpg');">
+      <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
+      
+      <div
+        class="slide-content absolute top-1/2 -translate-y-1/2 left-[5%] md:left-[8%] z-20 max-w-[600px] text-left text-white p-[20px]">
+        <h2 class="mb-[15px] text-[2.5rem] md:text-[3rem] font-bold leading-tight">Effortless Meeting & Event Coordination</h2>
+        <p class="text-[1.1rem] leading-[1.6] md:text-[1.2rem] mb-6">
+          Tired of juggling schedules and missing important events? REO streamlines the process of meeting
+          organization. Plan study groups, research sessions, or school events with ease. Our intuitive platform lets
+          you set dates, send invitations, and manage attendance—all in one place.</p>
+      </div>
+    </div>
+
+    <button id="prev"
+      class="arrow left absolute top-1/2 -translate-y-1/2 left-[30px] text-white text-[2rem] p-[15px] bg-black/30 hover:bg-black/50 rounded-full z-[10000] hidden md:flex items-center justify-center transition-all">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="next"
+      class="arrow right absolute top-1/2 -translate-y-1/2 right-[30px] text-white text-[2rem] p-[15px] bg-black/30 hover:bg-black/50 rounded-full z-[10000] hidden md:flex items-center justify-center transition-all">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <section id="mission" class="relative py-24 bg-[#f8fafc]">
+      <div class="max-w-7xl mx-auto px-6">
+          <div class="grid md:grid-cols-2 gap-16 items-center">
+              
                 <div class="relative">
                     <div class="absolute -inset-4 bg-brand-primary/5 rounded-2xl rotate-3"></div>
                     <img src="./images/msg2.png" alt="WMSU REO Visual" class="relative rounded-xl shadow-2xl w-full object-cover z-10 transform transition-transform hover:scale-[1.01] duration-500">
@@ -56,87 +68,153 @@
                     </div>
                 </div>
 
-                <div class="space-y-8">
-                    <div>
-                        <h2 class="text-brand-primary text-sm font-bold uppercase tracking-widest mb-2">Our Purpose</h2>
-                        <h3 class="text-4xl font-bold text-slate-900 mb-6">Upholding Ethical Standards</h3>
-                    </div>
+              <div class="space-y-8">
+                  <div>
+                      <h2 class="text-[#8B0000] text-sm font-bold uppercase tracking-widest mb-2">Our Purpose</h2>
+                      <h3 class="text-4xl font-bold text-slate-900 mb-6">Upholding Ethical Standards</h3>
+                  </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
-                        <div class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-brand-primary transition-colors">
-                            <i class="fas fa-shield-alt text-brand-primary text-xl group-hover:text-white transition-colors"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-800 mb-2">Mission</h4>
-                        <p class="text-slate-600 leading-relaxed">WMSU-REO/CERC safeguards the general welfare of human participants and animal subjects in the conduct of research.</p>
-                    </div>
+                  <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                      <div class="w-12 h-12 bg-[#8B0000] rounded-lg flex items-center justify-center mb-4">
+                          <i class="fas fa-shield-alt text-white text-xl"></i>
+                      </div>
+                      <h4 class="text-xl font-bold text-slate-800 mb-2">Mission</h4>
+                      <p class="text-slate-600 leading-relaxed">WMSU-REO/CERC safeguards the general welfare of human participants and animal subjects in the conduct of research.</p>
+                  </div>
 
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
-                        <div class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center mb-4 group-hover:bg-brand-primary transition-colors">
-                            <i class="fas fa-eye text-brand-primary text-xl group-hover:text-white transition-colors"></i>
-                        </div>
-                        <h4 class="text-xl font-bold text-slate-800 mb-2">Vision</h4>
-                        <p class="text-slate-600 leading-relaxed">To be an accredited board instituted to conduct ethics review in various fields of research involving human and animal subjects.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                  <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                      <div class="w-12 h-12 bg-[#8B0000] rounded-lg flex items-center justify-center mb-4">
+                          <i class="fas fa-eye text-white text-xl"></i>
+                      </div>
+                      <h4 class="text-xl font-bold text-slate-800 mb-2">Vision</h4>
+                      <p class="text-slate-600 leading-relaxed">To be an accredited board instituted to conduct ethics review in various fields of research involving human and animal subjects.</p>
+                  </div>
+                  
+                   <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+                      <div class="w-12 h-12 bg-[#8B0000] rounded-lg flex items-center justify-center mb-4">
+                          <i class="fas fa-bullseye text-white text-xl"></i>
+                      </div>
+                      <h4 class="text-xl font-bold text-slate-800 mb-2">Goals</h4>
+                      <p class="text-slate-600 leading-relaxed">WMSU-REO attempts to achieve the following goals: 1. Conduct a quality and standard ethical review process for all researches.</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
 
-    <section class="py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-brand-dark to-brand-primary z-0"></div>
-        <div class="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-red-500/20 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
+  <div
+    class="reoc-join-wrapper max-w-[1400px] mx-auto flex items-center justify-between flex-wrap p-[60px_80px] md:p-[60px_80px]">
+    <div class="reoc-join-image flex-1 min-w-[300px] p-[10px]">
+      <img src="./images/join.png" alt="Art Style Image" class="max-w-full h-auto rounded-[12px]">
+    </div>
+    <div class="reoc-join-content flex-1 min-w-[300px] p-[10px]">
+      <div class="before:block before:w-[50px] before:h-[4px] before:bg-[#8B0000] before:mb-[12px]"></div>
+      <h2 class="reoc-join-title text-[2.2rem] text-[#333] mb-[20px]">Join Us Now</h2>
+      <p class="reoc-join-text text-[1rem] text-[#555] leading-[1.6] mb-[30px] font-bold">Why should you join REOC? As a
+        premier school research facility, REO offers you access to cutting-edge technology, expert mentorship, and a
+        vibrant community passionate about innovation.</p>
+      <a href="{{ route('register') }}"
+        class="reoc-join-btn inline-block bg-[#8B0000] text-white px-[26px] py-[12px] font-[700] rounded-[6px] hover:bg-red-800 transition-colors">Join
+        Us</a>
+    </div>
+  </div>
 
-        <div class="max-w-6xl mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-            <div class="text-white max-w-2xl">
-                <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Innovate?</h2>
-                <p class="text-red-100 text-lg leading-relaxed mb-8">
-                    Join the WMSU Research Ethics Office community today. Access cutting-edge technology, expert mentorship, and a vibrant network of researchers.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <div class="flex items-center gap-2 text-sm font-medium bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                        <i class="fas fa-check-circle text-green-400"></i> Expert Mentorship
-                    </div>
-                    <div class="flex items-center gap-2 text-sm font-medium bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                        <i class="fas fa-check-circle text-green-400"></i> Secure Storage
-                    </div>
-                </div>
-            </div>
-            <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-red-400 to-orange-400 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <a href="{{ route('register') }}" class="relative block bg-white text-brand-dark px-10 py-5 rounded-xl font-bold text-xl hover:bg-gray-50 transition-all transform active:scale-95 shadow-2xl">
-                    Join Us Now
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <x-footer/>
+  <x-footer/>
   
-    <script>
-        // Logic preserved, simplified
-        const slides = document.querySelectorAll('.slide');
-        const next = document.getElementById('next');
-        const prev = document.getElementById('prev');
-        let currentIndex = 0;
-
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const next = document.getElementById('next');
+    const prev = document.getElementById('prev');
+    let currentIndex = 0;
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+          slide.classList.add('active');
         }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % slides.length;
-            showSlide(currentIndex);
+      });
+    }
+    next.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    });
+    prev.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+      showSlide(currentIndex);
+    });
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }, 5000);
+    const navbar = document.getElementById('navbar');
+    let lastScrollY = window.scrollY;
+    const navH1 = navbar.querySelector('h1');
+    const navLinks = navbar.querySelectorAll('.nav-right span');
+    const navButton = document.getElementById('nav-cta-btn');
+    
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY < lastScrollY) {
+        navbar.style.top = "0";
+        if (currentScrollY > 0) {
+          navbar.classList.add('bg-white', 'shadow');
+          navbar.classList.remove('bg-transparent');
+          
+          navH1.classList.remove('text-white');
+          navH1.classList.add('text-[#990101]');
+          
+          navLinks.forEach(el => {
+            el.classList.remove('text-white/80');
+            el.classList.add('text-black');
+          });
+          
+          if (navButton) {
+            navButton.classList.remove('bg-white', 'text-[#990101]');
+            navButton.classList.add('bg-[#990101]', 'text-white');
+          }
+        } else {
+          navbar.classList.remove('bg-white', 'shadow');
+          navbar.classList.add('bg-transparent');
+          
+          navH1.classList.remove('text-[#990101]');
+          navH1.classList.add('text-white');
+          
+          navLinks.forEach(el => {
+            el.classList.remove('text-black');
+            el.classList.add('text-white/80');
+          });
+          
+          if (navButton) {
+            navButton.classList.remove('bg-[#990101]', 'text-white');
+            navButton.classList.add('bg-white', 'text-[#990101]');
+          }
         }
-
-        next.addEventListener('click', nextSlide);
-        prev.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-            showSlide(currentIndex);
+      } else {
+        navbar.style.top = "-80px";
+      }
+      lastScrollY = currentScrollY;
+    });
+    
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        mobileMenu.style.display = 'none';
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      const fadeInElements = document.querySelectorAll(".fade-in");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
         });
-
-        setInterval(nextSlide, 6000); // Increased duration slightly for better reading time
-    </script>
+      }, { threshold: 0.1 });
+      fadeInElements.forEach(el => observer.observe(el));
+    });
+  </script>
 </x-layout>

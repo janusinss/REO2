@@ -6790,7 +6790,7 @@ FILE: resources/views/components/footer.blade.php
                         Our online portal streamlines the submission and review process for researchers and committee members.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-red-600 transition">
+                        <a href="https://www.facebook.com/profile.php?id=100066732383288" class="text-gray-400 hover:text-red-600 transition">
                             <i class="fab fa-facebook-f text-lg"></i>
                         </a>
                         <a href="#" class="text-gray-400 hover:text-red-600 transition">

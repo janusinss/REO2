@@ -19,10 +19,12 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; }
+        
+        /* Crucial for your Original Slider */
         .slide.active { opacity: 1 !important; z-index: 1 !important; }
     </style>
 </head>
-<body class="bg-surface-50 text-slate-800 antialiased selection:bg-brand-primary selection:text-white">
+<body class="bg-surface-50 text-slate-800 antialiased selection:bg-[#8B0000] selection:text-white">
 
     <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-transparent">
         <div class="max-w-7xl mx-auto px-6 h-[80px] flex justify-between items-center">
@@ -37,10 +39,10 @@
             </div>
 
             <div class="hidden md:flex items-center gap-6 nav-right">
-                <a href="{{ route('login') }}" class="text-sm font-medium text-white/90 hover:text-white transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full">
-                    Already a member?
-                </a>
-                <button onclick="location.href='{{ route('login') }}'" class="bg-white text-brand-primary px-6 py-2.5 rounded-full font-bold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-95">
+                <span class="text-sm font-medium text-white/80">
+                    Have an account?
+                </span>
+                <button id="nav-cta-btn" onclick="location.href='{{ route('login') }}'" class="bg-white text-[#8B0000] px-6 py-2.5 rounded-full font-bold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 active:scale-95">
                     Access Portal
                 </button>
             </div>
@@ -51,10 +53,11 @@
         </div>
     </nav>
 
-    <div id="mobileMenu" class="fixed inset-0 bg-brand-dark/95 z-40 flex flex-col justify-center items-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-xl">
+    <div id="mobileMenu" class="fixed inset-0 bg-[#1a0505]/95 z-40 flex flex-col justify-center items-center gap-8 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-xl">
         <button id="closeMobile" class="absolute top-6 right-6 text-white text-3xl"><i class="fas fa-times"></i></button>
-        <a href="{{ route('login') }}" class="text-2xl font-bold text-white">Login</a>
-        <a href="{{ route('register') }}" class="text-2xl font-bold text-white/70">Register</a>
+        <span class="text-lg text-white/60">Have an account?</span>
+        <a href="{{ route('login') }}" class="text-3xl font-bold text-white">Login</a>
+        <a href="{{ route('register') }}" class="text-xl font-bold text-white/70 border-t border-white/10 pt-4 mt-4">Register</a>
     </div>
   
     <main>
@@ -63,40 +66,44 @@
 
     <script>
         const navbar = document.getElementById('navbar');
-        const navTexts = document.querySelectorAll('.nav-right a');
+        const navTexts = document.querySelectorAll('.nav-right span');
+        const navBtn = document.getElementById('nav-cta-btn'); // Targeted ID
         const navLogoText = document.querySelector('nav h1');
         const navLogoSub = document.querySelector('nav span');
-        const navBtn = document.querySelector('.nav-right button');
         const hamburger = document.getElementById('hamburger');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
+                // Scrolled State (White Bar)
                 navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'border-slate-200/50');
                 navbar.classList.remove('border-transparent');
-                navbar.querySelector('h1').classList.replace('text-white', 'text-brand-primary');
-                navbar.querySelector('span').classList.replace('text-white/70', 'text-slate-500');
-                navTexts.forEach(el => el.classList.replace('text-white/90', 'text-slate-600'));
-                navbar.querySelectorAll('.after:bg-white').forEach(el => el.classList.replace('after:bg-white', 'after:bg-brand-primary'));
+                
+                // Text Colors
+                navLogoText.classList.replace('text-white', 'text-[#8B0000]');
+                navLogoSub.classList.replace('text-white/70', 'text-slate-500');
+                navTexts.forEach(el => el.classList.replace('text-white/80', 'text-slate-600'));
                 hamburger.classList.replace('text-white', 'text-slate-800');
                 
-                // Button inversion
-                navBtn.classList.remove('bg-white', 'text-brand-primary');
-                navBtn.classList.add('bg-brand-primary', 'text-white');
+                // Button: RED Background, WHITE Text
+                navBtn.classList.remove('bg-white', 'text-[#8B0000]');
+                navBtn.classList.add('bg-[#8B0000]', 'text-white'); 
             } else {
+                // Top State (Transparent)
                 navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'border-slate-200/50');
                 navbar.classList.add('border-transparent');
-                navbar.querySelector('h1').classList.replace('text-brand-primary', 'text-white');
-                navbar.querySelector('span').classList.replace('text-slate-500', 'text-white/70');
-                navTexts.forEach(el => el.classList.replace('text-slate-600', 'text-white/90'));
+                
+                // Text Colors
+                navLogoText.classList.replace('text-[#8B0000]', 'text-white');
+                navLogoSub.classList.replace('text-slate-500', 'text-white/70');
+                navTexts.forEach(el => el.classList.replace('text-slate-600', 'text-white/80'));
                 hamburger.classList.replace('text-slate-800', 'text-white');
 
-                // Button inversion reset
-                navBtn.classList.add('bg-white', 'text-brand-primary');
-                navBtn.classList.remove('bg-brand-primary', 'text-white');
+                // Button: WHITE Background, RED Text
+                navBtn.classList.add('bg-white', 'text-[#8B0000]');
+                navBtn.classList.remove('bg-[#8B0000]', 'text-white');
             }
         });
 
-        // Mobile Menu Logic
         const mobileMenu = document.getElementById('mobileMenu');
         const closeMobile = document.getElementById('closeMobile');
 

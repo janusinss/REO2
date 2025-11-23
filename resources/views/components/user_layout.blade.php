@@ -140,5 +140,6 @@
         closeBtn.addEventListener('click', toggleSidebar);
         overlay.addEventListener('click', toggleSidebar);
     </script>
+<x-flash />
 </body>
 </html>
