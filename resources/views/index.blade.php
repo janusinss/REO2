@@ -8,12 +8,13 @@
       <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
       
       <div
-        class="slide-content absolute top-1/2 -translate-y-1/2 left-[5%] md:left-[8%] z-20 max-w-[600px] text-left text-white p-[20px]">
-        <h2 class="mb-[15px] text-[2.5rem] md:text-[3rem] font-bold leading-tight">Welcome to REO: Where Research Meets Collaboration</h2>
-        <p class="text-[1.1rem] leading-[1.6] md:text-[1.2rem] mb-6">At REO, we’re creating a space where students, faculty,
-          and researchers come together to innovate, share knowledge, and grow. Whether you're looking to collaborate on
-          research projects, share valuable resources, or connect with peers REO is your go-to hub for academic
-          success.</p>
+        class="slide-content absolute bottom-[26%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
+        <h2 class="mb-[20px] text-[2.5rem] md:text-[2.5rem] font-bold leading-tight drop-shadow-lg">
+          Welcome to REO: Where Research Meets Collaboration
+        </h2>
+        <p class="text-[1.1rem] leading-[1.7] md:text-[1.25rem] drop-shadow-md">
+          At REO, we’re creating a space where students, faculty, and researchers come together to innovate, share knowledge, and grow. Whether you're looking to collaborate on research projects, share valuable resources, or connect with peers, REO is your go-to hub for academic success.
+        </p>
       </div>
     </div>
 
@@ -22,12 +23,13 @@
       <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
       
       <div
-        class="slide-content absolute top-1/2 -translate-y-1/2 left-[5%] md:left-[8%] z-20 max-w-[600px] text-left text-white p-[20px]">
-        <h2 class="mb-[15px] text-[2.5rem] md:text-[3rem] font-bold leading-tight">Collaborate, Share, Achieve</h2>
-        <p class="text-[1.1rem] leading-[1.6] md:text-[1.2rem] mb-6">
-          The power of collaboration lies in the exchange of ideas. REO makes it easy for students to pass materials,
-          participate in discussions, and contribute to ongoing research projects. From sharing research papers to
-          organizing study sessions, everything you need to stay connected and productive is just a click away.</p>
+        class="slide-content absolute bottom-[30%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
+        <h2 class="mb-[20px] text-[2.5rem] md:text-[2.5rem] font-bold leading-tight drop-shadow-lg">
+          Collaborate, Share, Achieve
+        </h2>
+        <p class="text-[1.1rem] leading-[1.7] md:text-[1.25rem] drop-shadow-md">
+          The power of collaboration lies in the exchange of ideas. REO makes it easy for students to pass materials, participate in discussions, and contribute to ongoing research projects. From sharing research papers to organizing study sessions, everything you need to stay connected and productive is just a click away.
+        </p>
       </div>
     </div>
 
@@ -36,23 +38,22 @@
       <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
       
       <div
-        class="slide-content absolute top-1/2 -translate-y-1/2 left-[5%] md:left-[8%] z-20 max-w-[600px] text-left text-white p-[20px]">
-        <h2 class="mb-[15px] text-[2.5rem] md:text-[3rem] font-bold leading-tight">Effortless Meeting & Event Coordination</h2>
-        <p class="text-[1.1rem] leading-[1.6] md:text-[1.2rem] mb-6">
-          Tired of juggling schedules and missing important events? REO streamlines the process of meeting
-          organization. Plan study groups, research sessions, or school events with ease. Our intuitive platform lets
-          you set dates, send invitations, and manage attendance—all in one place.</p>
+        class="slide-content absolute bottom-[25%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
+        <h2 class="mb-[20px] text-[2.5rem] md:text-[2.5rem] font-bold leading-tight drop-shadow-lg">
+          Effortless Meeting & Event Coordination
+        </h2>
+        <p class="text-[1.1rem] leading-[1.7] md:text-[1.25rem] drop-shadow-md">
+          Tired of juggling schedules and missing important events? REO streamlines the process of meeting organization. Plan study groups, research sessions, or school events with ease. Our intuitive platform lets you set dates, send invitations, and manage attendance—all in one place.
+        </p>
       </div>
     </div>
 
     <button id="prev"
-      class="arrow left absolute top-1/2 -translate-y-1/2 left-[30px] text-white text-[2rem] p-[15px] bg-black/30 hover:bg-black/50 rounded-full z-[10000] hidden md:flex items-center justify-center transition-all">
-        <i class="fas fa-chevron-left"></i>
-    </button>
+      class="arrow left absolute top-1/2 -translate-y-1/2 left-[30px] text-white text-[2rem] p-[10px] bg-none z-[10000] hidden md:block"><i
+        class="fas fa-chevron-left"></i></button>
     <button id="next"
-      class="arrow right absolute top-1/2 -translate-y-1/2 right-[30px] text-white text-[2rem] p-[15px] bg-black/30 hover:bg-black/50 rounded-full z-[10000] hidden md:flex items-center justify-center transition-all">
-        <i class="fas fa-chevron-right"></i>
-    </button>
+      class="arrow right absolute top-1/2 -translate-y-1/2 right-[30px] text-white text-[2rem] p-[10px] bg-none z-[10000] hidden md:block"><i
+        class="fas fa-chevron-right"></i></button>
   </div>
 
   <section id="mission" class="relative py-24 bg-[#f8fafc]">
@@ -159,15 +160,12 @@
         if (currentScrollY > 0) {
           navbar.classList.add('bg-white', 'shadow');
           navbar.classList.remove('bg-transparent');
-          
           navH1.classList.remove('text-white');
           navH1.classList.add('text-[#990101]');
-          
           navLinks.forEach(el => {
             el.classList.remove('text-white/80');
             el.classList.add('text-black');
           });
-          
           if (navButton) {
             navButton.classList.remove('bg-white', 'text-[#990101]');
             navButton.classList.add('bg-[#990101]', 'text-white');
@@ -175,15 +173,12 @@
         } else {
           navbar.classList.remove('bg-white', 'shadow');
           navbar.classList.add('bg-transparent');
-          
           navH1.classList.remove('text-[#990101]');
           navH1.classList.add('text-white');
-          
           navLinks.forEach(el => {
             el.classList.remove('text-black');
             el.classList.add('text-white/80');
           });
-          
           if (navButton) {
             navButton.classList.remove('bg-[#990101]', 'text-white');
             navButton.classList.add('bg-white', 'text-[#990101]');
