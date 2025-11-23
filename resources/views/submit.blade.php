@@ -1,271 +1,181 @@
 <x-user_layout>
-    <x-first_time_popup/>
-
-      <main class="flex-grow container mx-auto px-4 py-8">
-
-<form method="POST" action="{{ route('submit.title') }}" enctype="multipart/form-data" class="max-w-4xl mx-auto">
-  @csrf
-  <h1 class="text-3xl font-bold text-background-dark dark:text-background-light mb-8">
-    Research Submission
-  </h1>
-
-  <div class="bg-background-light dark:bg-background-dark/50 rounded-lg p-6 space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
-      <!-- Study Title -->
-      <div>
-        <label
-          for="Study_Protocol_title"
-          class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1"
-        >
-          Study Protocol Title
-        </label>
-        <input
-          id="Study_Protocol_title" name="Study_Protocol_title"
-          type="text"
-          placeholder="Enter study protocol title"
-          class="w-full bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-3 px-4 text-background-dark dark:text-background-light focus:ring-primary focus:border-primary"
-          required
-        />
-      </div>
-
-      <!-- Research Category -->
-      <div>
-        <label
-          for="Research_Category"
-          class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1"
-        >
-          Research Category
-        </label>
-        <select
-          id="Research_Category" name="Research_Category"
-          class="form-select w-full bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-3 px-4 text-background-dark dark:text-background-light focus:ring-primary focus:border-primary"
-          required
-        >
-          <option selected disabled>Select research category</option>
-          <option>WMSU Undergraduate Thesis - 300.00</option>
-          <option>WMSU Master's Thesis - 700.00</option>
-          <option>WMSU Dissertation - 1,500.00</option>
-          <option>WMSU Institutionally Funded Research - 2,000.00</option>
-          <option>Externally Funded Research / Other Institution - 3,000.00</option>
-        </select>
-      </div>
-
-      <!-- Adviser -->
-      <div>
-        <label
-          for="Adviser"
-          class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1"
-        >
-          Name of Adviser
-        </label>
-        <input
-          id="Adviser" name="Adviser"
-          type="text"
-          placeholder="Enter adviser's name"
-          class="w-full bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-3 px-4 text-background-dark dark:text-background-light focus:ring-primary focus:border-primary"
-          required
-        />
-      </div>
-    </div>
-  </div>
-
-<!-- File Upload Section -->
-<div class="bg-background-light dark:bg-background-dark/50 rounded-lg p-6 space-y-6 mt-6">
-  <h2 class="text-xl font-semibold text-background-dark dark:text-background-light mb-4">
-    Required Research Documents
-  </h2>
-
-  <div class="space-y-4">
-
-    <!-- 1. Application Form -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Application Form for Research Ethics Review - WMSU-REO-FR-001 (PDF)
-      </label>
-      <input type="file" name="files[application_form]" accept="application/pdf" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light
-               file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0
-               file:text-sm file:font-semibold file:bg-primary file:text-white
-               hover:file:bg-primary/90 transition
-               bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 2. Research Protocol -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Research Protocol / Proposal (with page and line numbers, PDF)
-      </label>
-      <input type="file" name="files[research_protocol]" accept="application/pdf" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 3. Technical Review Clearance -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Technical Review Clearance (with panel signatures, PDF)
-      </label>
-      <input type="file" name="files[technical_clearance]" accept="application/pdf" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 4. Data Collection Instruments -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Data Collection Instrument/s (with page and line numbers, PDF)
-      </label>
-      <input type="file" name="files[data_collection_instruments]" accept="application/pdf" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 5. Informed Consent/Assent -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Informed Consent / Assent (with page and line numbers, PDF)
-      </label>
-      <input type="file" name="files[informed_consent]" accept="application/pdf" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 6. Curriculum Vitae -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Curriculum Vitae of Researcher/s (PDF)
-      </label>
-      <input type="file" name="files[curriculum_vitae]" accept="application/pdf" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 7. Completed Study Protocol Assessment Form -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Completed Study Protocol Assessment Form - WMSU-REO-FR-004 (Word)
-      </label>
-      <input type="file" name="files[study_protocol_form]" accept=".doc,.docx" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 8. Completed Informed Consent Assessment Form -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Completed Informed Consent Assessment Form - WMSU-REO-FR-005 (Word)
-      </label>
-      <input type="file" name="files[informed_consent_form]" accept=".doc,.docx" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 9. Completed Exempt Review Assessment Form -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Completed Exempt Review Assessment Form - WMSU-REO-FR-006 (Word)
-      </label>
-      <input type="file" name="files[exempt_review_form]" accept=".doc,.docx" required
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-    <!-- 10. Supplementary Documents -->
-    <div>
-      <label class="block text-sm font-medium text-background-dark/80 dark:text-background-light/80 mb-1">
-        Supplementary Documents (NCIP Clearance, MOA, MOU, etc., PDF, optional)
-      </label>
-      <input type="file" name="files[supplementary_docs][]" accept="application/pdf" multiple
-        class=" ai-checkable-file block w-full text-background-dark dark:text-background-light file:mr-4 file:py-3 file:px-6 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90 transition bg-background-light dark:bg-background-dark border border-background-dark/20 dark:border-background-light/20 rounded-lg py-2 px-3" />
-    </div>
-
-  </div>
-</div>
-
-
-
-
-
-  <div id="ai-results-container" class="mt-6 hidden">
-    <h3 class="text-xl font-semibold text-background-dark dark:text-background-light mb-4">AI Compliance Check Results:</h3>
-    <div id="ai-results" class="prose dark:prose-invert max-w-none rounded-lg border border-gray-300 bg-gray-50 p-4 dark:border-gray-700 dark:bg-background-dark">
+    <div class="min-h-screen bg-surface-50 py-12 px-4 sm:px-6 lg:px-8">
+        
+        <div class="max-w-3xl mx-auto text-center mb-10">
+            <h2 class="text-3xl font-extrabold text-slate-900 font-heading tracking-tight">New Submission</h2>
+            <p class="mt-2 text-slate-500">Fill out the details below to initiate a new research protocol review.</p>
         </div>
-  </div>
 
-  <div class="flex flex-col items-center gap-4 pt-6 md:flex-row md:justify-end">
-      <button type="button" id="ai-check-btn"
-              class="w-full rounded-lg bg-blue-600 px-6 py-3 font-bold text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 md:w-auto">
-          Check Files with AI
-      </button>
-      <button type="submit"
-              class="w-full rounded-lg bg-primary px-6 py-3 font-bold text-white hover:bg-primary/90 focus:ring-2 focus:ring-primary focus:ring-offset-2 md:w-auto">
-          Submit Research
-      </button>
-  </div>
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden relative">
+            <div class="h-2 bg-gradient-to-r from-brand-secondary to-brand-primary w-full"></div>
 
-</form>
+            <div class="p-8 md:p-12">
+                <form action="{{ route('submit.title') }}" method="POST" class="space-y-8">
+                    @csrf
 
-       
-      </main>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="title" class="block text-sm font-bold text-slate-700 mb-2">Research Title</label>
+                            <input type="text" name="title" id="title" required 
+                                class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium placeholder-slate-400 focus:ring-2 focus:ring-brand-primary focus:bg-white transition-all" 
+                                placeholder="Enter the full title of your research...">
+                        </div>
 
-      
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const aiCheckBtn = document.getElementById('ai-check-btn');
-        const allFileInputs = document.querySelectorAll('.ai-checkable-file'); // Selects all inputs with the new class
-        const resultsContainer = document.getElementById('ai-results-container');
-        const resultsDiv = document.getElementById('ai-results');
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="category" class="block text-sm font-bold text-slate-700 mb-2">Category</label>
+                                <div class="relative">
+                                    <select name="category" id="category" required 
+                                        class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 appearance-none focus:ring-2 focus:ring-brand-primary focus:bg-white transition-all">
+                                        <option value="" disabled selected>Select Category</option>
+                                        <option value="Research">Research</option>
+                                        <option value="Extension">Extension</option>
+                                    </select>
+                                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
+                                        <i class="fas fa-chevron-down text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
 
-        aiCheckBtn.addEventListener('click', async () => {
-            const formData = new FormData();
-            let fileCount = 0;
+                            <div>
+                                <label for="adviser" class="block text-sm font-bold text-slate-700 mb-2">Research Adviser</label>
+                                <input type="text" name="adviser" id="adviser" required 
+                                    class="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-primary focus:bg-white transition-all" 
+                                    placeholder="e.g., Prof. Jane Doe">
+                            </div>
+                        </div>
+                    </div>
 
-            // Loop through all designated file inputs
-            allFileInputs.forEach(input => {
-                if (input.files.length > 0) {
-                    for (const file of input.files) {
-                        formData.append('research_files[]', file); // Append each file to the same array
-                        fileCount++;
-                    }
-                }
-            });
+                    <hr class="border-slate-100">
 
-            if (fileCount === 0) {
-                alert('Please select at least one file to check.');
-                return;
-            }
+                    <div>
+                        <label for="abstract" class="block text-sm font-bold text-slate-700 mb-2">Abstract / Description</label>
+                        <textarea name="abstract" id="abstract" rows="6" required 
+                            class="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:ring-2 focus:ring-brand-primary focus:bg-white transition-all resize-y leading-relaxed" 
+                            placeholder="Provide a brief summary of your research objectives and methodology..."></textarea>
+                        <p class="text-right text-xs text-slate-400 mt-2">Min. 100 characters</p>
+                    </div>
 
-            resultsContainer.classList.remove('hidden');
-            resultsDiv.innerHTML = '<p>Checking files with AI... This may take a moment.</p>';
-            aiCheckBtn.disabled = true;
-            aiCheckBtn.textContent = 'Checking...';
+                    <div class="flex items-center justify-end gap-4 pt-4">
+                        <a href="{{ route('home') }}" class="px-6 py-3 rounded-xl text-slate-500 font-bold hover:bg-slate-100 transition-colors">Cancel</a>
+                        <div class="bg-slate-50 rounded-2xl border border-slate-200 p-8 mb-8">
+                            <div class="flex items-start gap-4 mb-6">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
+                                    <span class="material-symbols-outlined text-2xl">smart_toy</span>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-900">AI Compliance Checker</h3>
+                                    <p class="text-slate-500 text-sm mt-1">Upload your PDF documents here first to check for formatting errors (page numbers, signatures) before final submission.</p>
+                                </div>
+                            </div>
 
-            try {
-                const response = await fetch("{{ route('submit.ai_check') }}", {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json',
-                    },
-                });
+                            <div id="drop-zone" class="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:bg-white hover:border-brand-primary transition-all cursor-pointer relative group">
+                                <input type="file" id="ai_files" multiple accept=".pdf,.doc,.docx" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                
+                                <div class="group-hover:scale-105 transition-transform duration-300">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-slate-300 group-hover:text-brand-primary mb-3 transition-colors"></i>
+                                    <p class="font-bold text-slate-600">Click or Drag files here to scan</p>
+                                    <p class="text-xs text-slate-400 mt-1">PDF, DOCX (Max 10MB)</p>
+                                </div>
+                            </div>
 
-                const data = await response.json();
+                            <div id="file-list" class="mt-4 space-y-2"></div>
+                            <div id="ai-loader" class="hidden mt-4">
+                                <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-blue-600 h-2 rounded-full animate-progress"></div>
+                                </div>
+                                <p class="text-xs text-center text-blue-600 font-bold mt-2 animate-pulse">Analyzing documents with AI...</p>
+                            </div>
 
-                if (!response.ok) {
-                    throw new Error(data.error || `Server error: ${response.status}`);
-                }
-                
-                // Style the table that 'marked' will create
-                resultsDiv.innerHTML = `<style>
-                    #ai-results table { width: 100%; border-collapse: collapse; }
-                    #ai-results th, #ai-results td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-                    #ai-results th { background-color: #f2f2f2; }
-                    .dark #ai-results th { background-color: #333; border-color: #555; }
-                    .dark #ai-results td { border-color: #555; }
-                </style>` + marked.parse(data.feedback);
+                            <button type="button" onclick="performAiCheck()" id="check-btn" class="mt-6 w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-brand-primary transition-colors shadow-lg hidden">
+                                Run Compliance Check
+                            </button>
 
-            } catch (error) {
-                resultsDiv.innerHTML = `<p style="color: red;"><strong>Error:</strong> ${error.message}</p>`;
-                console.error('AI Check Error:', error);
-            } finally {
-                aiCheckBtn.disabled = false;
-                aiCheckBtn.textContent = 'Check Files with AI';
-            }
-        });
-    });
-</script>
+                            <div id="ai-results" class="hidden mt-6 bg-white rounded-xl border border-slate-200 p-6 animate-[fadeInUp_0.3s_ease-out]">
+                                <h4 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                    <i class="fas fa-clipboard-check text-green-500"></i> Compliance Report
+                                </h4>
+                                <div id="ai-feedback-content" class="prose prose-sm max-w-none text-slate-600"></div>
+                            </div>
+                        </div>
 
+                        <style>
+                            @keyframes progress {
+                                0% { width: 0%; }
+                                50% { width: 70%; }
+                                100% { width: 100%; }
+                            }
+                            .animate-progress { animation: progress 2s infinite linear; }
+                        </style>
+
+                        <script>
+                            const fileInput = document.getElementById('ai_files');
+                            const fileList = document.getElementById('file-list');
+                            const checkBtn = document.getElementById('check-btn');
+                            const loader = document.getElementById('ai-loader');
+                            const results = document.getElementById('ai-results');
+                            const feedback = document.getElementById('ai-feedback-content');
+
+                            fileInput.addEventListener('change', () => {
+                                fileList.innerHTML = '';
+                                if (fileInput.files.length > 0) {
+                                    Array.from(fileInput.files).forEach(file => {
+                                        fileList.innerHTML += `
+                                            <div class="flex items-center gap-2 text-sm text-slate-600 bg-white p-2 rounded-lg border border-slate-100">
+                                                <i class="fas fa-file text-brand-primary"></i> ${file.name}
+                                            </div>`;
+                                    });
+                                    checkBtn.classList.remove('hidden');
+                                }
+                            });
+
+                            async function performAiCheck() {
+                                const formData = new FormData();
+                                Array.from(fileInput.files).forEach(file => {
+                                    formData.append('research_files[]', file);
+                                });
+
+                                // UI Updates
+                                checkBtn.disabled = true;
+                                checkBtn.classList.add('opacity-50');
+                                loader.classList.remove('hidden');
+                                results.classList.add('hidden');
+
+                                try {
+                                    const response = await fetch("{{ route('submit.ai_check') }}", {
+                                        method: 'POST',
+                                        headers: {
+                                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                                        },
+                                        body: formData
+                                    });
+
+                                    const data = await response.json();
+                                    
+                                    loader.classList.add('hidden');
+                                    results.classList.remove('hidden');
+                                    checkBtn.disabled = false;
+                                    checkBtn.classList.remove('opacity-50');
+
+                                    if (data.feedback) {
+                                        // Convert markdown table to HTML (simple replacement) or display as is
+                                        // Ideally use a library like 'marked', but for now we format newlines
+                                        feedback.innerHTML = marked.parse(data.feedback); 
+                                    } else if (data.error) {
+                                        feedback.innerHTML = `<p class="text-red-600 font-bold">Error: ${data.error}</p>`;
+                                    }
+
+                                } catch (error) {
+                                    console.error(error);
+                                    loader.classList.add('hidden');
+                                    checkBtn.disabled = false;
+                                    alert('An error occurred while communicating with the AI checker.');
+                                }
+                            }
+                        </script>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </x-user_layout>

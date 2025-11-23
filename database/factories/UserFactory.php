@@ -22,15 +22,17 @@ class UserFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {
-        return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::random(10),
-        ];
-    }
+        {
+            return [
+                'first_name' => fake()->firstName(), // Changed from 'name'
+                'last_name' => fake()->lastName(),   // Added last_name
+                'email' => fake()->unique()->safeEmail(),
+                'email_verified_at' => now(),
+                'password' => static::$password ??= Hash::make('password'),
+                'remember_token' => Str::random(10),
+                'external_user' => false,            // Added because your migration requires this
+            ];
+        }
 
     /**
      * Indicate that the model's email address should be unverified.
