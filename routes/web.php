@@ -35,10 +35,10 @@ Route::middleware(['auth', 'role:researcher'])->group(function () {
     Route::get('/home/{id}/files', [Research_title_Controller::class, 'manageFiles'])->name('manage.files');
     Route::post('/home/{id}/files/update', [Research_title_Controller::class, 'updateFile'])->name('update.file');  
 
-
     Route::post('/submit/ai-check', [AiCheckController::class, 'checkDocuments'])->name('submit.ai_check');
-
-
+    Route::post('/settings/profile', [AuthController::class, 'updateProfile'])->name('settings.update_profile');
+    Route::post('/settings/password', [AuthController::class, 'updatePassword'])->name('settings.update_password');
+    Route::delete('/settings/delete', [AuthController::class, 'deleteAccount'])->name('settings.delete_account');
 });
 
 // admin access prolly
@@ -70,3 +70,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/verify', [AuthController::class, 'showVerifyForm'])->name('verify.show');
     Route::post('/verify', [AuthController::class, 'verifyCode'])->name('verify.submit');
 });
+
+Route::get('/admin/meetings', function () { return view('admin.meetings'); })->name('admin.meetings');

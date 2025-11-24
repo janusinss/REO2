@@ -1,62 +1,68 @@
 <x-admin_layout>
-    <main class="max-w-6xl mx-auto py-8 animate-[fadeInUp_0.3s_ease-out]">
+    <x-slot name="title">Protocol Review: {{ $researchTitle->reoc_code ?? 'New Submission' }}</x-slot>
+
+    <div class="flex h-[calc(100vh-140px)] gap-6">
         
-        <div class="mb-8">
-            <a href="{{ route('admin.NewSubmissions') }}" class="inline-flex items-center gap-2 text-slate-500 hover:text-brand-primary font-bold text-xs uppercase tracking-wide mb-4 transition-colors">
-                <i class="fas fa-arrow-left"></i> Back to Submissions
-            </a>
-            <div class="flex items-start justify-between">
-                <div>
-                    <h1 class="text-3xl font-extrabold text-slate-900 font-heading">Submission Documents</h1>
-                    <p class="text-slate-500 mt-2 text-lg">Reviewing files for: <span class="font-bold text-slate-800">{{ $researchTitle->Study_Protocol_title ?? 'Untitled Submission' }}</span></p>
+        <div class="w-2/3 bg-slate-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+            <div class="bg-black/40 p-3 flex justify-between items-center text-white/80 backdrop-blur-md">
+                <span class="text-sm font-mono"><i class="fas fa-file-pdf mr-2 text-red-400"></i> Research_Protocol_v1.pdf</span>
+                <div class="flex gap-2">
+                    <button class="hover:text-white"><i class="fas fa-download"></i></button>
+                    <button class="hover:text-white"><i class="fas fa-expand"></i></button>
                 </div>
-                <span class="px-4 py-2 rounded-full bg-brand-primary/10 text-brand-primary font-bold text-sm border border-brand-primary/20">
-                    {{ $files->count() }} Files Uploaded
-                </span>
+            </div>
+            <div class="flex-1 bg-slate-800 flex items-center justify-center text-slate-600">
+                <div class="text-center">
+                    <i class="fas fa-file-pdf text-6xl mb-4 opacity-20"></i>
+                    <p>Document Preview</p>
+                </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @forelse($files as $file)
-            <div class="group bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+        <div class="w-1/3 flex flex-col gap-6 overflow-y-auto pr-1">
+            
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-slate-800 text-lg mb-1">{{ $researchTitle->Study_Protocol_title }}</h3>
+                <p class="text-sm text-slate-500 mb-4">{{ $researchTitle->author->first_name }} {{ $researchTitle->author->last_name }}</p>
                 
-                <div class="bg-slate-50 p-6 border-b border-slate-100 flex justify-center items-center h-40 group-hover:bg-blue-50/30 transition-colors">
-                    @if(Str::endsWith($file->file_path, '.pdf'))
-                        <i class="fas fa-file-pdf text-6xl text-red-500 drop-shadow-md"></i>
-                    @else
-                        <i class="fas fa-file-word text-6xl text-blue-500 drop-shadow-md"></i>
-                    @endif
+                <div class="flex gap-2">
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg text-xs font-bold uppercase">Expedited</span>
+                    <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-lg text-xs font-bold uppercase">Pending Review</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex-1">
+                <div class="mb-4 pb-4 border-b border-slate-100">
+                    <h4 class="font-bold text-slate-800 text-sm">Assign Reviewers (SOP 05)</h4>
+                    <p class="text-xs text-slate-500">Expedited review requires 2 Primary Reviewers.</p>
                 </div>
 
-                <div class="p-6 flex-grow">
-                    <h3 class="font-bold text-slate-800 mb-1 truncate" title="{{ $file->file_name }}">
-                        {{ $file->file_name }}
-                    </h3>
-                    <div class="flex items-center gap-2 text-xs text-slate-400 mb-4">
-                        <i class="far fa-clock"></i> {{ $file->created_at->format('M d, Y • h:i A') }}
+                <form action="#" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Primary Reviewer 1</label>
+                        <select class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#8B0000]">
+                            <option>Select Scientist...</option>
+                            <option>Dr. Jose Rizal (Medical)</option>
+                        </select>
                     </div>
-                    
-                    <div class="flex gap-2 mt-auto">
-                        <a href="{{ asset('storage/' . $file->file_path) }}" target="_blank" 
-                           class="flex-1 bg-slate-900 text-white font-bold py-2.5 rounded-lg text-center text-sm hover:bg-brand-primary transition-colors shadow-md flex items-center justify-center gap-2">
-                            <span class="material-symbols-outlined text-base">visibility</span> View
-                        </a>
-                        <a href="{{ asset('storage/' . $file->file_path) }}" download
-                           class="w-10 flex items-center justify-center border border-slate-200 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-900 transition-colors">
-                            <span class="material-symbols-outlined text-base">download</span>
-                        </a>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Primary Reviewer 2</label>
+                        <select class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-[#8B0000]">
+                            <option>Select Member...</option>
+                            <option>Ms. Maria Clara (Lay)</option>
+                        </select>
                     </div>
-                </div>
+
+                    <div class="pt-2">
+                        <button class="w-full bg-[#8B0000] text-white font-bold py-3 rounded-xl shadow-lg shadow-red-900/20 hover:bg-red-900 transition-all">
+                            Confirm Assignment
+                        </button>
+                        <p class="text-[10px] text-center text-slate-400 mt-2">Reviewers will be notified via email immediately.</p>
+                    </div>
+                </form>
             </div>
-            @empty
-            <div class="col-span-full flex flex-col items-center justify-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-                <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-300">
-                    <span class="material-symbols-outlined text-4xl">folder_off</span>
-                </div>
-                <h3 class="text-xl font-bold text-slate-400">No documents found</h3>
-                <p class="text-slate-400 text-sm mt-1">The researcher hasn't uploaded any files yet.</p>
-            </div>
-            @endforelse
+
         </div>
-    </main>
+    </div>
 </x-admin_layout>

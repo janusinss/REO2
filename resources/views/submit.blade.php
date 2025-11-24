@@ -109,7 +109,7 @@
                                     <i class="fas fa-file-word text-blue-400"></i> <span>Exempt Review Assessment Form</span>
                                 </div>
                                 <div class="flex items-center gap-3 bg-white/5 p-2.5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-                                    <i class="fas fa-file-word text-blue-400"></i> <span>Exempt Review Assessment Form</span>
+                                    <i class="fas fa-file-word text-blue-400"></i> <span>Supplementary Documents (Optional)</span>
                                 </div>
                                 
                             </div>

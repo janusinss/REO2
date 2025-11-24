@@ -6,91 +6,111 @@
     <title>REO Admin Portal</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/reoc-nobg.png') }}" >
     
+    <script src="https://cdn.tailwindcss.com"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-heading { font-family: 'Montserrat', sans-serif; }
+        /* Active Link Styling */
+        .nav-item.active {
+            background: linear-gradient(to right, rgba(139, 0, 0, 0.2), transparent);
+            border-left: 4px solid #8B0000;
+            color: white;
+        }
     </style>
 </head>
-<body class="bg-surface-50 text-slate-800">
+<body class="bg-slate-50 text-slate-800">
 
-    <div class="flex min-h-screen">
-        <aside class="w-64 bg-brand-dark text-white flex flex-col fixed inset-y-0 left-0 z-50 shadow-2xl transition-transform duration-300 transform -translate-x-full md:translate-x-0" id="sidebar">
-            <div class="h-20 flex items-center px-6 border-b border-white/10 bg-brand-primary/20 backdrop-blur-sm">
-                <img src="{{ asset('images/reoc-nobg.png') }}" class="w-8 h-8 mr-3 bg-white rounded-full">
-                <div>
-                    <h1 class="font-heading font-bold text-lg tracking-wide">REO Admin</h1>
-                    <p class="text-[10px] text-slate-400 uppercase tracking-wider">Control Panel</p>
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-72 bg-[#1a0505] text-white flex flex-col shadow-2xl z-50 relative">
+            <div class="h-20 flex items-center px-8 border-b border-white/5 bg-gradient-to-r from-[#8B0000]/20 to-transparent">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-lg overflow-hidden">
+                         <img src="{{ asset('images/reoc-nobg.png') }}" class="w-6 h-6">
+                    </div>
+                    <div>
+                        <h1 class="font-heading font-bold text-lg tracking-wide">REO Admin</h1>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-widest">Oversight Comm.</p>
+                    </div>
                 </div>
             </div>
 
-            <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-                <p class="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Main</p>
+            <nav class="flex-1 px-4 py-6 space-y-8 overflow-y-auto">
                 
-                <a href="{{ route('admin.analytics') }}" class="flex items-center px-4 py-3 rounded-xl text-sm font-medium {{ request()->routeIs('admin.analytics') ? 'bg-brand-primary text-white shadow-lg shadow-red-900/50' : 'text-slate-300 hover:bg-white/5 hover:text-white' }} transition-all">
-                    <i class="fas fa-chart-pie w-6"></i> Analytics
-                </a>
-                
-                <a href="{{ route('admin.NewSubmissions') }}" class="flex items-center px-4 py-3 rounded-xl text-sm font-medium {{ request()->routeIs('admin.NewSubmissions') ? 'bg-brand-primary text-white shadow-lg' : 'text-slate-300 hover:bg-white/5 hover:text-white' }} transition-all">
-                    <i class="fas fa-file-alt w-6"></i> New Submissions
-                </a>
+                <div>
+                    <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Review Process</p>
+                    <div class="space-y-1">
+                        <a href="{{ route('admin.analytics') }}" class="nav-item flex items-center gap-3 px-4 py-3 rounded-r-lg text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-all {{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined text-xl">monitoring</span> Analytics
+                        </a>
+                        <a href="{{ route('admin.NewSubmissions') }}" class="nav-item flex items-center gap-3 px-4 py-3 rounded-r-lg text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-all {{ request()->routeIs('admin.NewSubmissions') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined text-xl">inbox</span> 
+                            <span class="flex-1">Initial Intake</span>
+                            @if($pendingCount = \App\Models\Research_title::where('Status', 'Pending')->count())
+                                <span class="bg-[#8B0000] text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $pendingCount }}</span>
+                            @endif
+                        </a>
+                        <a href="{{ route('admin.applications') }}" class="nav-item flex items-center gap-3 px-4 py-3 rounded-r-lg text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-all {{ request()->routeIs('admin.applications') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined text-xl">folder_managed</span> Active Protocols
+                        </a>
+                    </div>
+                </div>
 
-                <p class="px-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-6 mb-2">Management</p>
+                <div>
+                    <p class="px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">Committee</p>
+                    <div class="space-y-1">
+                        <a href="#" class="nav-item flex items-center gap-3 px-4 py-3 rounded-r-lg text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-all">
+                            <span class="material-symbols-outlined text-xl">groups</span> Meetings & Agenda
+                        </a>
+                        <a href="{{ route('admin.manage_staff') }}" class="nav-item flex items-center gap-3 px-4 py-3 rounded-r-lg text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-all {{ request()->routeIs('admin.manage_staff') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined text-xl">badge</span> REO Members
+                        </a>
+                        <a href="{{ route('admin.manage_users') }}" class="nav-item flex items-center gap-3 px-4 py-3 rounded-r-lg text-sm font-medium text-slate-400 hover:bg-white/5 hover:text-white transition-all {{ request()->routeIs('admin.manage_users') ? 'active' : '' }}">
+                            <span class="material-symbols-outlined text-xl">person_search</span> Researchers
+                        </a>
+                    </div>
+                </div>
 
-                <a href="{{ route('admin.applications') }}" class="flex items-center px-4 py-3 rounded-xl text-sm font-medium {{ request()->routeIs('admin.applications') ? 'bg-brand-primary text-white shadow-lg' : 'text-slate-300 hover:bg-white/5 hover:text-white' }} transition-all">
-                    <i class="fas fa-tasks w-6"></i> Applications
-                </a>
-                <a href="{{ route('admin.manage_users') }}" class="flex items-center px-4 py-3 rounded-xl text-sm font-medium {{ request()->routeIs('admin.manage_users') ? 'bg-brand-primary text-white shadow-lg' : 'text-slate-300 hover:bg-white/5 hover:text-white' }} transition-all">
-                    <i class="fas fa-users w-6"></i> Users
-                </a>
             </nav>
 
             <div class="p-4 border-t border-white/10 bg-black/20">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-white font-bold">
+                <div class="flex items-center gap-3 px-2">
+                    <div class="w-10 h-10 rounded-lg bg-[#8B0000] flex items-center justify-center text-white font-bold shadow-md">
                         {{ substr(Auth::user()->first_name ?? 'A', 0, 1) }}
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-white truncate">{{ Auth::user()->first_name ?? 'Admin' }}</p>
-                        <a href="{{ route('logout') }}" class="text-xs text-slate-400 hover:text-white transition-colors">Log out</a>
+                        <p class="text-sm font-bold text-white truncate">{{ Auth::user()->first_name ?? 'Admin' }}</p>
+                        <p class="text-xs text-slate-400 truncate">System Administrator</p>
                     </div>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-slate-400 hover:text-white transition-colors"><span class="material-symbols-outlined">logout</span></button>
+                    </form>
                 </div>
             </div>
         </aside>
 
-        <div class="flex-1 flex flex-col md:ml-64 min-h-screen transition-all duration-300">
-            <header class="md:hidden h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sticky top-0 z-40">
-                <button id="sidebarToggle" class="text-slate-600 p-2 rounded-lg hover:bg-slate-100">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-                <span class="font-bold text-brand-primary">REO Admin</span>
-                <div class="w-8"></div> </header>
+        <main class="flex-1 flex flex-col h-full overflow-hidden relative bg-slate-50">
+            <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-8 sticky top-0 z-40">
+                <h2 class="text-xl font-bold text-slate-800 font-heading">{{ $title ?? 'Dashboard' }}</h2>
+                <div class="flex items-center gap-4">
+                    <button class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-slate-200 hover:text-[#8B0000] transition-colors relative">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 border-2 border-white rounded-full"></span>
+                    </button>
+                </div>
+            </header>
 
-            <main class="flex-1 p-6 md:p-10 overflow-x-hidden">
+            <div class="flex-1 overflow-y-auto p-8">
                 {{ $slot }}
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
 
-    <script>
-        const toggle = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.createElement('div');
-        
-        toggle?.addEventListener('click', () => {
-            const isClosed = sidebar.classList.contains('-translate-x-full');
-            if (isClosed) {
-                sidebar.classList.remove('-translate-x-full');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-            }
-        });
-    </script>
-    <x-flash />
 </body>
 </html>

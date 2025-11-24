@@ -1,260 +1,158 @@
 <x-admin_layout>
-    <div class="max-w-full mx-auto space-y-6 h-full flex flex-col">
+    <x-slot name="title">Initial Submissions (SOP 03)</x-slot>
+
+    <div class="space-y-6">
         
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-slate-200">
-            <div>
-                <h1 class="text-2xl font-bold text-slate-800 font-heading">Submission Queue</h1>
-                <p class="text-slate-500 text-sm mt-1">Manage incoming protocols and review status.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-yellow-100 text-yellow-600 flex items-center justify-center"><i class="fas fa-inbox text-xl"></i></div>
+                <div><p class="text-2xl font-bold text-slate-800">{{ count($pendingSubmissions) }}</p><p class="text-xs text-slate-500 uppercase font-bold">Pending Classification</p></div>
             </div>
-            
-            <div class="flex gap-3 mt-4 md:mt-0 w-full md:w-auto">
-                <div class="relative flex-grow md:flex-grow-0">
-                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" placeholder="Search protocol..." 
-                        class="pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-brand-primary focus:border-brand-primary outline-none w-full md:w-64 shadow-sm">
-                </div>
-                <button class="px-3 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50">
-                    <i class="fas fa-filter"></i>
-                </button>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center"><i class="fas fa-search text-xl"></i></div>
+                <div><p class="text-2xl font-bold text-slate-800">8</p><p class="text-xs text-slate-500 uppercase font-bold">Under Review</p></div>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center"><i class="fas fa-check-circle text-xl"></i></div>
+                <div><p class="text-2xl font-bold text-slate-800">12</p><p class="text-xs text-slate-500 uppercase font-bold">Cleared This Month</p></div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 flex-grow overflow-hidden">
-            
-            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col overflow-hidden h-[calc(100vh-240px)]">
-                <div class="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                    <h3 class="font-bold text-slate-700 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-yellow-400 rounded-full"></span> Pending Review
-                    </h3>
-                    <span class="text-xs font-bold bg-white border border-slate-200 px-2 py-1 rounded-md text-slate-500">{{ count($pendingSubmissions) }}</span>
-                </div>
+        <div class="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
+            <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-800">Incoming Protocols</h3>
                 
-                <div class="overflow-y-auto flex-grow p-2 space-y-2">
-                    @forelse ($pendingSubmissions as $s)
-                    <div class="group p-4 rounded-xl border border-transparent hover:bg-slate-50 hover:border-slate-200 transition-all cursor-default">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ $s['created_at']->format('M d, Y') }}</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-yellow-100 text-yellow-700 border border-yellow-200">
-                                {{ $s['Status'] }}
+                <div class="flex gap-2">
+                    <input type="text" placeholder="Search researcher or title..." class="bg-white border border-slate-300 text-sm rounded-lg px-4 py-2 outline-none focus:border-[#8B0000]">
+                </div>
+            </div>
+
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="text-xs uppercase tracking-wider text-slate-500 font-bold border-b border-slate-100">
+                        <th class="p-6">Date Received</th>
+                        <th class="p-6">Protocol Details</th>
+                        <th class="p-6">Researcher</th>
+                        <th class="p-6 text-center">Completeness</th>
+                        <th class="p-6 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    @forelse($pendingSubmissions as $sub)
+                    <tr class="group hover:bg-slate-50 transition-colors">
+                        <td class="p-6 font-mono text-slate-500">{{ $sub->created_at->format('Y-m-d') }}</td>
+                        <td class="p-6">
+                            <p class="font-bold text-slate-800 text-base mb-1 line-clamp-1" title="{{ $sub->Study_Protocol_title }}">{{ $sub->Study_Protocol_title }}</p>
+                            <span class="inline-block px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px] font-bold uppercase">{{ $sub->Research_Category }}</span>
+                        </td>
+                        <td class="p-6">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-[#8B0000]/10 text-[#8B0000] flex items-center justify-center font-bold">
+                                    {{ substr($sub->author->first_name ?? 'U', 0, 1) }}
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-700">{{ $sub->author->first_name ?? 'Unknown' }} {{ $sub->author->last_name ?? '' }}</p>
+                                    <p class="text-xs text-slate-400">{{ $sub->author->college ?? 'External' }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="p-6 text-center">
+                            <span class="inline-flex items-center gap-1 text-green-600 font-bold text-xs bg-green-50 px-2 py-1 rounded border border-green-100">
+                                <i class="fas fa-check"></i> Passed AI
                             </span>
-                        </div>
-                        <h4 class="text-base font-bold text-slate-800 mb-1 group-hover:text-brand-primary transition-colors line-clamp-1">
-                            {{ $s['Study_Protocol_title'] }}
-                        </h4>
-                        <p class="text-xs text-slate-500 mb-4">
-                            By <span class="font-semibold text-slate-700">{{ $s->author->first_name ?? 'Unknown' }} {{ $s->author->last_name ?? '' }}</span>
-                        </p>
-                        
-                        <div class="flex gap-2 opacity-60 group-hover:opacity-100 transition-opacity">
-                            <button onclick="openDetailsModal(this)" 
-                                data-id="{{ $s->id }}"
-                                data-title="{{ e($s->Study_Protocol_title) }}"
-                                data-category="{{ e($s->Research_Category) }}"
-                                data-author="{{ e(($s->author->first_name ?? '') . ' ' . ($s->author->last_name ?? '')) }}"
-                                data-email="{{ e($s->author->email ?? '') }}"
-                                data-adviser="{{ e($s->Adviser ?? '') }}"
-                                data-status="{{ e($s->Status ?? '') }}"
-                                data-contact="{{ $s->author->contact ?? '' }}"
-                                data-created="{{ $s->created_at ? $s->created_at->format('Y-m-d H:i') : '' }}"
-                                class="flex-1 py-1.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-100 hover:text-slate-800">
-                                Details
+                        </td>
+                        <td class="p-6 text-right">
+                            <button onclick="openTriageModal('{{ $sub->id }}', '{{ $sub->Study_Protocol_title }}')" class="bg-[#8B0000] hover:bg-red-900 text-white px-4 py-2 rounded-lg font-bold text-xs shadow-md transition-all hover:-translate-y-0.5">
+                                Classify
                             </button>
-                            <button onclick="openActionModal(this)" 
-                                data-id="{{ $s->id }}"
-                                class="flex-1 py-1.5 text-xs font-bold text-white bg-slate-800 rounded-lg hover:bg-slate-700 shadow-md">
-                                Review
-                            </button>
-                        </div>
-                    </div>
+                        </td>
+                    </tr>
                     @empty
-                    <div class="h-full flex flex-col items-center justify-center text-slate-400">
-                        <i class="fas fa-inbox text-4xl mb-2 opacity-20"></i>
-                        <p class="text-sm">No pending items</p>
-                    </div>
+                    <tr>
+                        <td colspan="5" class="p-12 text-center text-slate-400">
+                            <i class="fas fa-inbox text-4xl mb-3 opacity-30"></i>
+                            <p>No pending submissions found.</p>
+                        </td>
+                    </tr>
                     @endforelse
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col overflow-hidden h-[calc(100vh-240px)]">
-                <div class="p-5 border-b border-slate-100 bg-red-50/30 flex justify-between items-center">
-                    <h3 class="font-bold text-slate-700 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-red-500 rounded-full"></span> Needs Attention
-                    </h3>
-                    <span class="text-xs font-bold bg-white border border-slate-200 px-2 py-1 rounded-md text-slate-500">{{ count($incompleteSubmissions) }}</span>
-                </div>
-                
-                <div class="overflow-y-auto flex-grow p-2 space-y-2">
-                    @forelse ($incompleteSubmissions as $s)
-                    <div class="group p-4 rounded-xl border border-transparent hover:bg-red-50/30 hover:border-red-100 transition-all cursor-default">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">{{ $s['created_at']->format('M d, Y') }}</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700 border border-red-200">
-                                Incomplete
-                            </span>
-                        </div>
-                        <h4 class="text-base font-bold text-slate-800 mb-1 group-hover:text-red-700 transition-colors line-clamp-1">
-                            {{ $s['Study_Protocol_title'] }}
-                        </h4>
-                        
-                        <div class="flex gap-2 mt-4 opacity-60 group-hover:opacity-100 transition-opacity">
-                            <button onclick="openDetailsModal(this)" 
-                                data-id="{{ $s->id }}"
-                                data-title="{{ e($s->Study_Protocol_title) }}"
-                                data-category="{{ e($s->Research_Category) }}"
-                                data-author="{{ e(($s->author->first_name ?? '') . ' ' . ($s->author->last_name ?? '')) }}"
-                                data-email="{{ e($s->author->email ?? '') }}"
-                                data-adviser="{{ e($s->Adviser ?? '') }}"
-                                data-status="{{ e($s->Status ?? '') }}"
-                                data-contact="{{ $s->author->contact ?? '' }}"
-                                data-created="{{ $s->created_at ? $s->created_at->format('Y-m-d H:i') : '' }}"
-                                class="flex-1 py-1.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-100">
-                                View
-                            </button>
-                            <button onclick="openActionModal(this)" 
-                                data-id="{{ $s->id }}"
-                                class="flex-1 py-1.5 text-xs font-bold text-brand-primary bg-red-50 border border-red-100 rounded-lg hover:bg-red-100">
-                                Re-Assess
-                            </button>
-                        </div>
-                    </div>
-                    @empty
-                    <div class="h-full flex flex-col items-center justify-center text-slate-400">
-                        <i class="fas fa-check-circle text-4xl mb-2 opacity-20"></i>
-                        <p class="text-sm">All clear</p>
-                    </div>
-                    @endforelse
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <div id="detailsmodal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-[scaleIn_0.2s_ease-out]">
-            <div class="bg-slate-900 p-6 flex justify-between items-center">
-                <h2 class="text-lg font-bold text-white">Submission Details</h2>
-                <button onclick="closeModal('detailsmodal')" class="text-white/50 hover:text-white transition-colors">
-                    <i class="fas fa-times text-lg"></i>
-                </button>
-            </div>
-            <div class="p-8 space-y-6 max-h-[70vh] overflow-y-auto">
-                <div>
-                    <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Research Title</label>
-                    <p class="text-lg font-bold text-slate-800 mt-1" id="modal-title">...</p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Author</label>
-                        <p class="font-semibold text-slate-700" id="modal-author">...</p>
-                        <p class="text-xs text-slate-500 mt-1" id="modal-email">...</p>
-                    </div>
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100">
-                        <label class="text-xs font-bold text-slate-400 uppercase tracking-wider">Category</label>
-                        <p class="font-semibold text-slate-700" id="modal-category">...</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-end pt-4 border-t border-slate-100">
-                    <button onclick="closeModal('detailsmodal')" class="px-6 py-2 text-slate-500 font-bold hover:bg-slate-50 rounded-lg transition-colors">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="actionModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden p-6 space-y-6 animate-[scaleIn_0.2s_ease-out]">
-            <div class="text-center">
-                <div class="w-12 h-12 bg-brand-primary/10 text-brand-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-gavel text-xl"></i>
-                </div>
-                <h2 class="text-xl font-bold text-slate-900">Review Decision</h2>
-                <p class="text-sm text-slate-500 mt-1">What is your verdict on this protocol?</p>
-            </div>
-
-            <div class="space-y-3">
-                <button onclick="setSubmissionStatus('complete')" class="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-xl shadow-lg shadow-green-900/20 transition-all">
-                    <i class="fas fa-check mr-2"></i> Accept for Review
-                </button>
-                <button onclick="setSubmissionStatus('incomplete')" class="w-full py-3 bg-white border-2 border-red-100 text-red-600 font-bold rounded-xl hover:bg-red-50 transition-all">
-                    <i class="fas fa-exclamation-circle mr-2"></i> Mark Incomplete
-                </button>
+    <div id="triageModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-[scaleIn_0.2s_ease-out]">
+            <div class="bg-slate-900 p-6 border-b border-slate-800">
+                <h3 class="text-white font-bold text-lg">Protocol Classification</h3>
+                <p class="text-slate-400 text-xs mt-1">Determine the level of review required (SOP 04/05/06).</p>
             </div>
             
-            <button onclick="closeModal('actionModal')" class="w-full text-xs font-bold text-slate-400 uppercase tracking-wider hover:text-slate-600">Cancel</button>
-        </div>
-    </div>
+            <form id="triageForm" method="POST" action="">
+                @csrf
+                <div class="p-6 space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Protocol Title</label>
+                        <p id="modalTitle" class="text-slate-800 font-bold bg-slate-50 p-3 rounded-lg border border-slate-200"></p>
+                    </div>
 
-    <div id="incompleteReasonModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden p-6 space-y-4 animate-[scaleIn_0.2s_ease-out]">
-            <h2 class="text-lg font-bold text-slate-800">Missing Requirements</h2>
-            <textarea id="incompleteReason" rows="4" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-brand-primary outline-none text-sm" placeholder="E.g., Missing signature on page 4..."></textarea>
-            <div class="flex justify-end gap-3">
-                <button onclick="closeModal('incompleteReasonModal')" class="px-4 py-2 text-slate-500 font-bold hover:bg-slate-50 rounded-lg">Cancel</button>
-                <button onclick="submitIncompleteReason()" class="px-6 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700 shadow-lg">Submit</button>
-            </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Select Review Type</label>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-start gap-3 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-green-50 hover:border-green-200 transition-all">
+                                <input type="radio" name="review_type" value="Exempt" class="mt-1 text-green-600 focus:ring-green-500">
+                                <div>
+                                    <span class="block font-bold text-slate-800 text-sm">Exempt Review (SOP 04)</span>
+                                    <span class="block text-xs text-slate-500 mt-0.5">No human participants or minimal risk.</span>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-blue-50 hover:border-blue-200 transition-all">
+                                <input type="radio" name="review_type" value="Expedited" class="mt-1 text-blue-600 focus:ring-blue-500">
+                                <div>
+                                    <span class="block font-bold text-slate-800 text-sm">Expedited Review (SOP 05)</span>
+                                    <span class="block text-xs text-slate-500 mt-0.5">Minimal risk. Assigned to 2 Primary Reviewers.</span>
+                                </div>
+                            </label>
+
+                            <label class="flex items-start gap-3 p-3 border border-slate-200 rounded-xl cursor-pointer hover:bg-red-50 hover:border-red-200 transition-all">
+                                <input type="radio" name="review_type" value="Full Review" class="mt-1 text-[#8B0000] focus:ring-[#8B0000]">
+                                <div>
+                                    <span class="block font-bold text-slate-800 text-sm">Full Board Review (SOP 06)</span>
+                                    <span class="block text-xs text-slate-500 mt-0.5">High risk / Vulnerable groups. Requires meeting.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-100 p-4 rounded-lg flex justify-between items-center">
+                        <span class="text-xs font-bold text-slate-500">System will assign Code:</span>
+                        <span class="font-mono font-bold text-slate-900 bg-white px-2 py-1 rounded border border-slate-200">{{ date('Y') }}-{{ str_pad($pendingSubmissions->count() + 1, 3, '0', STR_PAD_LEFT) }}</span>
+                    </div>
+                </div>
+
+                <div class="p-6 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
+                    <button type="button" onclick="closeTriage()" class="px-5 py-2.5 text-slate-600 font-bold text-sm hover:bg-white rounded-lg transition-colors">Cancel</button>
+                    <button type="submit" class="px-6 py-2.5 bg-[#8B0000] text-white font-bold text-sm rounded-lg shadow-lg hover:bg-red-900 transition-colors">Confirm & Assign</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        function openDetailsModal(button) {
-            const data = button.dataset;
-            ['title', 'category', 'author', 'email', 'adviser', 'status', 'contact', 'created'].forEach(key => {
-                const el = document.getElementById(`modal-${key}`);
-                if(el) el.textContent = data[key] || '—';
-            });
-            document.getElementById('detailsmodal').classList.remove('hidden');
+        function openTriageModal(id, title) {
+            const modal = document.getElementById('triageModal');
+            const titleEl = document.getElementById('modalTitle');
+            const form = document.getElementById('triageForm');
+            
+            titleEl.textContent = title;
+            form.action = `/admin/${id}/set-initial-review`; // Route to be created
+            
+            modal.classList.remove('hidden');
         }
 
-        let selectedSubmissionId = null;
-        function openActionModal(button) {
-            selectedSubmissionId = button.dataset.id;
-            document.getElementById('actionModal').classList.remove('hidden');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
-
-        function setSubmissionStatus(action) {
-            if (!selectedSubmissionId) return;
-            if (action === 'complete') {
-                updateStatus(selectedSubmissionId, 'For Initial Review', null);
-                closeModal('actionModal');
-            } else {
-                closeModal('actionModal');
-                document.getElementById('incompleteReasonModal').classList.remove('hidden');
-            }
-        }
-
-        function submitIncompleteReason() {
-            const reason = document.getElementById('incompleteReason').value.trim();
-            if (!reason) return alert('Please provide a reason.');
-            updateStatus(selectedSubmissionId, 'Incomplete', reason);
-            closeModal('incompleteReasonModal');
-        }
-
-        function getCsrfToken() {
-            return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-        }
-
-        async function updateStatus(id, status, reason) {
-            const token = getCsrfToken();
-            if(!token) return alert('CSRF token missing');
-
-            try {
-                const res = await fetch(`/admin/update-status/${id}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token },
-                    body: JSON.stringify({ status, reason })
-                });
-                if(!res.ok) throw new Error('Failed');
-                const data = await res.json();
-                alert(data.message);
-                window.location.reload();
-            } catch(e) {
-                console.error(e);
-                alert('Error updating status');
-            }
+        function closeTriage() {
+            document.getElementById('triageModal').classList.add('hidden');
         }
     </script>
 </x-admin_layout>

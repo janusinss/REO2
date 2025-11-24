@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-
     public function showLogin()
     {
         return view('auth.login');
@@ -121,7 +120,7 @@ class AuthController extends Controller
             // TEMPORARY: Kill the app and show the error on screen so we know what's wrong
             dd($e->getMessage()); 
         }
-        
+
         // 6. Log them in instantly so we know who is verifying
         Auth::login($user);
 
@@ -183,5 +182,56 @@ public function verifyCode(Request $request)
         return back()->withErrors(['code' => 'Invalid verification code. Please try again.']);
     }
 
+    // Update Profile Logic
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+        
+        $data = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'college' => 'nullable|string|max:255',
+            'department' => 'nullable|string|max:255',
+            'institute' => 'nullable|string|max:255',
+        ]);
 
+        $user->update($data);
+
+        return redirect()->route('settings')->with('success', 'Profile updated successfully.');
+    }
+
+    // Update Password Logic
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required|current_password',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        Auth::user()->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('settings')->with('success', 'Password changed successfully.');
+    }
+
+    // Delete Account Logic
+    public function deleteAccount(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|current_password',
+        ]);
+
+        $user = Auth::user();
+
+        Auth::logout();
+        
+        if ($user->delete()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('index')->with('success', 'Your account has been successfully deleted.');
+        }
+
+        return back()->with('error', 'Failed to delete account. Please try again.');
+    }
 }
