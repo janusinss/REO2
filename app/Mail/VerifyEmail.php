@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -12,32 +11,25 @@ use Illuminate\Queue\SerializesModels;
 class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $user;
-    /**
-     * Create a new message instance.
-     */
-    public function __construct($user)
+
+    public $code;
+
+    public function __construct($code)
     {
-        $this->user = $user;
+        $this->code = $code;
     }
 
-    public function build()
+    public function envelope(): Envelope
     {
-        return $this->subject('Email Verification Code')
-                    ->view('emails.verify')
-                    ->with([
-                        'name' => $this->user->name,
-                        'code' => $this->user->verification_code,
-                    ]); 
+        return new Envelope(
+            subject: 'Verify Your REO Account',
+        );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
+    public function content(): Content
     {
-        return [];
+        return new Content(
+            view: 'emails.verify', // This matches the file we created earlier
+        );
     }
 }

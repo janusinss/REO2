@@ -8,7 +8,7 @@
       <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
       
       <div
-        class="slide-content absolute bottom-[26%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
+        class="slide-content absolute bottom-[30%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
         <h2 class="mb-[20px] text-[2.5rem] md:text-[2.5rem] font-bold leading-tight drop-shadow-lg">
           Welcome to REO: Where Research Meets Collaboration
         </h2>
@@ -23,7 +23,7 @@
       <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
       
       <div
-        class="slide-content absolute bottom-[30%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
+        class="slide-content absolute bottom-[35%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
         <h2 class="mb-[20px] text-[2.5rem] md:text-[2.5rem] font-bold leading-tight drop-shadow-lg">
           Collaborate, Share, Achieve
         </h2>
@@ -38,7 +38,7 @@
       <div class="overlay absolute inset-0 bg-black/60 z-10"></div>
       
       <div
-        class="slide-content absolute bottom-[25%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
+        class="slide-content absolute bottom-[30%] left-[6%] md:left-[10%] z-20 max-w-[700px] text-left text-white p-[20px]">
         <h2 class="mb-[20px] text-[2.5rem] md:text-[2.5rem] font-bold leading-tight drop-shadow-lg">
           Effortless Meeting & Event Coordination
         </h2>

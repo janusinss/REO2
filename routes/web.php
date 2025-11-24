@@ -6,19 +6,6 @@ use App\Http\Controllers\admin;
 use App\Http\Controllers\Research_title_Controller;
 use App\Http\Controllers\AiCheckController;
 
-// use App\Http\Controllers\Con;                   make a controller for index page just to logout every time it refreshes
-
-// Route::get('/', function () {
-//     return view('index');
-// });
-// Route::get('/admin', function () {
-//     return view('admin.dashboard', ['title' => 'Admin']);
-// });
-// Route::get('/home', function () {
-//     return view('home');
-// });
-// Route::get('/home', function () { return view('home'); })->name('home');
-
 Route::get('/', function () { return view('index'); })->name('index');
 
 Route::middleware('guest')->group(function () {
@@ -54,9 +41,6 @@ Route::middleware(['auth', 'role:researcher'])->group(function () {
 
 });
 
-
-// Route::get('logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
-
 // admin access prolly
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function(){ return view('admin.analytics'); })->name('admin.analytics');
@@ -74,9 +58,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/admin/view-files/{id}', [admin::class, 'viewFiles'])->name('admin.view_files');
 
 });
-// Route::middleware(['auth','is_admin'])->group(function () {
-//     Route::get('/admin', function(){ return view('admin.index'); });
-// });
 
 Route::post('/accept-terms', [AuthController::class, 'acceptTerms'])->name('accept.terms');
 
@@ -85,10 +66,7 @@ Route::get('/privacy-policy', function () { return view('legal.privacy'); })->na
 Route::get('/terms-of-service', function () { return view('legal.terms'); })->name('policy.terms');
 Route::get('/accessibility', function () { return view('legal.accessibility'); })->name('policy.accessibility');
 
-// bruh the auth is actually in the:
-// protected $routeMiddleware = [
-//     'auth' => \App\Http\Middleware\Authenticate::class,
-//     'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-//     // ...
-// ];
-// lmao
+Route::middleware('auth')->group(function () {
+    Route::get('/verify', [AuthController::class, 'showVerifyForm'])->name('verify.show');
+    Route::post('/verify', [AuthController::class, 'verifyCode'])->name('verify.submit');
+});

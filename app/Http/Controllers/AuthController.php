@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Mail\VerifyEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -51,90 +53,79 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    // Handle registration form
     public function register_internal(Request $request)
     {
+        // 1. Base Validation (Fields common to everyone)
+        $rules = [
+            'first_name' => 'required|string|max:255',
+            'last_name'  => 'required|string|max:255',
+            'middle_name'=> 'nullable|string|max:255',
+            'contact'    => 'required|string|max:20',
+            'password'   => 'required|min:8|confirmed',
+            'external_user' => 'required|boolean',
+        ];
 
-        $data = $request->validate([
-            'FirstName'     => 'required|string|max:255',
-            'MiddleName'     => 'nullable|string|max:255',
-            'LastName'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed', 
-            'college' => 'required|string|max:155',  
-            'department' => 'required|string|max:155',   
-            'course' => 'required|string|max:155', 
-            'contact' => 'nullable|string|max:11',
+        // 2. Conditional Validation
+        if ($request->external_user == '1') {
+            // External User Rules
+            $rules['email'] = 'required|email|unique:users,email';
+            $rules['institute'] = 'required|string|max:255';
+        } else {
+            // WMSU User Rules
+            $rules['email'] = [
+                'required',
+                'email',
+                'unique:users,email',
+                function ($attribute, $value, $fail) {
+                    if (!str_ends_with($value, '@wmsu.edu.ph')) {
+                        $fail('You must use a valid WMSU email address (@wmsu.edu.ph).');
+                    }
+                },
+            ];
+            $rules['college'] = 'required|string|max:255';
+            $rules['department'] = 'required|string|max:255';
+            $rules['course'] = 'required|string|max:255';
+        }
 
-        ]);
+        $validated = $request->validate($rules);
 
-        $verificationCode = rand(100000, 999999);   
-        // $verificationCode = 12345678;   
+        // 3. Generate 6-Digit OTP
+        $verificationCode = rand(100000, 999999);
 
-            $user = User::create([
-            'first_name'  => $data['FirstName'],
-            'middle_name' => $data['MiddleName'] ?? null,
-            'last_name' => $data['LastName'],
-            'college' => $data['college'] ?? null,
-            'department' => $data['department'] ?? null,
-            'contact' => $data['contact'] ?? null,
-            'course' => $data['course'] ?? null,
-            'email'    => $data['email'],
-            'password' => Hash::make($data['password']),
-            'external_user' =>  false,
-            'role'     => 'researcher', // default role
+        // 4. Create User
+        $user = User::create([
+            'first_name' => $validated['first_name'],
+            'last_name'  => $validated['last_name'],
+            'middle_name'=> $validated['middle_name'] ?? null,
+            'email'      => $validated['email'],
+            'contact'    => $validated['contact'],
+            'password'   => Hash::make($validated['password']),
+            'role'       => 'researcher',
+            'external_user' => $validated['external_user'],
+            
+            // Store specific fields depending on type
+            'institute'  => $request->external_user == '1' ? $validated['institute'] : null,
+            'college'    => $request->external_user == '0' ? $validated['college'] : null,
+            'department' => $request->external_user == '0' ? $validated['department'] : null,
+            'course'     => $request->external_user == '0' ? $validated['course'] : null,
+            
+            // Verification Data
             'verification_code' => $verificationCode,
             'is_verified' => false,
         ]);
-    
 
-    // Send email with verification code
-        Mail::to($user->email)->send(new \App\Mail\VerifyEmail($user));
+        // 5. Send Email
+        try {
+            Mail::to($user->email)->send(new VerifyEmail($verificationCode));
+        } catch (\Exception $e) {
+            // Log error but continue flow (or handle gracefully)
+        }
 
-        // Auth::login($user);
-        // return redirect()->route('home');
+        // 6. Log them in instantly so we know who is verifying
+        Auth::login($user);
 
-        return redirect()->route('verify.show', ['email' => $user->email])->with('success', 'We sent a verification code to your email.');
-    }
-    public function register_external(Request $request)
-    {
-
-        $data = $request->validate([
-            'FirstName'     => 'required|string|max:255',
-            'MiddleName'     => 'nullable|string|max:255',
-            'LastName'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6|confirmed', 
-            'institute' => 'required|string|max:155',  
-            'contact' => 'nullable|string|max:11',
-
-        ]);
-
-        $verificationCode = rand(100000, 999999);   
-        // $verificationCode = 12345678;   
-
-            $user = User::create([
-            'first_name'  => $data['FirstName'],
-            'middle_name' => $data['MiddleName'] ?? null,
-            'last_name' => $data['LastName'],
-            'contact' => $data['contact'] ?? null,
-            'email'    => $data['email'],
-            'institute' => $data['institute'] ?? null, 
-            'password' => Hash::make($data['password']),
-            'external_user' =>  false,
-            'role'     => 'researcher', // default role
-            'verification_code' => $verificationCode,
-            'is_verified' => false,
-        ]);
-    
-
-    // Send email with verification code
-        Mail::to($user->email)->send(new \App\Mail\VerifyEmail($user));
-
-        // Auth::login($user);
-        // return redirect()->route('home');
-
-        return redirect()->route('verify.show', ['email' => $user->email])->with('success', 'We sent a verification code to your email.');
+        // 7. Redirect to Verification Page
+        return redirect()->route('verify.show');
     }
 
     // Logout
@@ -155,37 +146,40 @@ class AuthController extends Controller
 
     return redirect()->route('instructions')->with('status', 'Thanks for accepting the terms!');
 }
-public function showVerifyForm(Request $request)
-{
-        if (!$request->has('email')) {
-        return redirect()->route('register')
-                         ->with('error', 'Please register first to get your verification code.');
-    }
-    return view('auth.verification');
-}
 
-    public function verifyCode(Request $request)
+public function showVerifyForm()
     {
-        $request->validate([
-            'email' => 'required|email',
-            'code' => 'required|numeric',
-        ]);
-
-        $user = User::where('email', $request->email)
-                    ->where('verification_code', $request->code)
-                    ->first();
-
-        if (!$user) {
-            return back()->with('error', 'Invalid verification code.');
+        // Ensure user is logged in but not verified
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
+        if (Auth::user()->is_verified) {
+            return redirect()->route('home');
         }
 
-        $user->is_verified = true;
-        $user->verification_code = null;
-        $user->save();
+        return view('auth.verification');
+    }
 
-        // Auth::login($user);
+public function verifyCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|numeric|digits:6'
+        ]);
 
-        return redirect()->route('login')->with('success', 'Email verified successfully!');
+        $user = Auth::user();
+
+        if ($request->code == $user->verification_code) {
+            // Success! Update status
+            $user->is_verified = true;
+            $user->verification_code = null; // Clear code for security
+            $user->email_verified_at = now();
+            $user->save();
+
+            return redirect()->route('home')->with('success', 'Account verified successfully! Welcome to REO.');
+        }
+
+        return back()->withErrors(['code' => 'Invalid verification code. Please try again.']);
     }
 
 

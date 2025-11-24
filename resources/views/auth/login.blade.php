@@ -16,6 +16,8 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-heading { font-family: 'Montserrat', sans-serif; }
+        .bg-\[\#8B0000\] { background-color: #8B0000; }
+        .text-\[\#8B0000\] { color: #8B0000; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased">
@@ -50,6 +52,13 @@
             </div>
 
             <div class="w-full max-w-md relative z-10">
+
+                <div class="mb-6">
+                    <a href="{{ route('index') }}" class="text-slate-500 hover:text-[#8B0000] transition-colors font-bold text-sm inline-flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+                
                 <div class="text-center md:text-left mb-10">
                     <h2 class="text-3xl font-bold text-slate-900 font-heading">Welcome Back</h2>
                     <p class="mt-2 text-slate-500">Please sign in to your researcher account.</p>
@@ -87,7 +96,7 @@
                         @error('password') <p class="text-red-500 text-xs mt-1 font-bold">{{ $message }}</p> @enderror
                     </div>
 
-                    <button type="submit" class="w-full bg-[#8B0000] hover:bg-red-900 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-900/20 hover:-translate-y-0.5 transition-all duration-200 flex justify-center items-center gap-2 group mt-8">
+                    <button type="submit" class="w-full bg-[#8B0000] hover:bg-red-900 text-white font-bold py-4 rounded-xl shadow-lg shadow-red-900/20 transition-all duration-200 flex justify-center items-center gap-2 group mt-8">
                         <span>Sign In</span>
                         <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </button>
