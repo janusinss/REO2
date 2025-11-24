@@ -118,9 +118,10 @@ class AuthController extends Controller
         try {
             Mail::to($user->email)->send(new VerifyEmail($verificationCode));
         } catch (\Exception $e) {
-            // Log error but continue flow (or handle gracefully)
+            // TEMPORARY: Kill the app and show the error on screen so we know what's wrong
+            dd($e->getMessage()); 
         }
-
+        
         // 6. Log them in instantly so we know who is verifying
         Auth::login($user);
 
